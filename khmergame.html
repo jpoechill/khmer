@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khmer Professional Language Game</title>
+    <style>
+        body {
+            font-family: 'Noto Sans Khmer', sans-serif;
+            background: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            background: #1e40af;
+            color: white;
+            padding: 1rem;
+            margin: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        #topicSelector {
+            margin: 1rem;
+            font-size: 1rem;
+            padding: 0.5rem;
+        }
+
+        #sentenceTarget {
+            font-size: 1.25rem;
+            margin: 1rem;
+            text-align: center;
+        }
+
+        .word-bank,
+        .user-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem;
+        }
+
+        .word {
+            background: white;
+            border: 2px solid #60a5fa;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .word.used {
+            background: #e5e7eb;
+            pointer-events: none;
+        }
+
+        .user-word {
+            background: #93c5fd;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #feedback {
+            font-size: 1rem;
+            margin: 1rem;
+            color: #111827;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Khmer Professional Language Game</h1>
+    <select id="topicSelector">
+        <option value="grammar">Grammar</option>
+        <option value="business">Business Terms</option>
+        <option value="news">News & Technical Reading</option>
+    </select>
+
+    <div id="sentenceTarget"></div>
+    <div class="word-bank" id="wordBank"></div>
+    <div class="user-input" id="userInput"></div>
+    <div class="controls">
+        <button id="checkBtn">Check Answer</button>
+        <button id="giveUpBtn">Give Up & Show Answer</button>
+        <button id="clearBtn">Clear Answer</button>
+    </div>
+    <div id="feedback"></div>
+
+    <audio id="correctSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
+    <audio id="wrongSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
+
+    <script>
+        const topics = {
+            grammar: [
+                { en: "This document was written in Khmer.", km: ["ឯកសារ​នេះ", "ត្រូវបាន", "សរសេរ", "ជាភាសាខ្មែរ"] },
+                { en: "She speaks Khmer fluently.", km: ["នាង", "និយាយ", "ភាសាខ្មែរ", "បាន​ល្អ"] }
+            ],
+            business: [
+                { en: "Please send me the invoice.", km: ["សូម", "ផ្ញើ", "វិក័យប័ត្រ", "មកខ្ញុំ"] },
+                { en: "We will schedule the meeting tomorrow.", km: ["ពួកយើង", "នឹង", "កំណត់ពេល", "ប្រជុំ", "ស្អែក"] }
+            ],
+            news: [
+                { en: "The Ministry issued a new policy.", km: ["ក្រសួង", "បានចេញ", "នយោបាយ", "ថ្មីមួយ"] },
+                { en: "The article discusses economic growth.", km: ["អត្ថបទនេះ", "ពិភាក្សា", "អំពី", "កំណើនសេដ្ឋកិច្ច"] }
+            ]
+        };
+
+        let currentIndex = 0;
+        let selectedTopic = "grammar";
+        let challenges = topics[selectedTopic];
+
+        const wordBank = document.getElementById("wordBank");
+        const userInput = document.getElementById("userInput");
+        const feedback = document.getElementById("feedback");
+        const sentenceTarget = document.getElementById("sentenceTarget");
+        const correctSound = document.getElementById("correctSound");
+        const wrongSound = document.getElementById("wrongSound");
+
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'km-KH';
+            speechSynthesis.speak(utterance);
+        }
+
+        document.getElementById("topicSelector").onchange = (e) => {
+            selectedTopic = e.target.value;
+            challenges = topics[selectedTopic];
+            currentIndex = 0;
+            renderChallenge();
+        };
+
+        function renderChallenge() {
+            const challenge = challenges[currentIndex];
+            sentenceTarget.textContent = `Translate this: "${challenge.en}"`;
+            const allWords = [...challenge.km, "ឆ្នើម", "អប់រំ", "គណនេយ្យ", "បច្ចេកវិទ្យា"];
+            allWords.sort(() => Math.random() - 0.5);
+
+            wordBank.innerHTML = "";
+            userInput.innerHTML = "";
+            feedback.textContent = "";
+
+            allWords.forEach(word => {
+                const span = document.createElement("span");
+                span.className = "word";
+                span.textContent = word;
+                span.onclick = () => {
+                    speak(word);
+                    span.classList.add("used");
+                    const selected = document.createElement("span");
+                    selected.className = "user-word";
+                    selected.textContent = word;
+                    selected.onclick = () => {
+                        userInput.removeChild(selected);
+                        span.classList.remove("used");
+                    };
+                    userInput.appendChild(selected);
+                };
+                wordBank.appendChild(span);
+            });
+        }
+
+        document.getElementById("checkBtn").onclick = () => {
+            const attempt = Array.from(userInput.children).map(e => e.textContent);
+            const correctSentence = challenges[currentIndex].km;
+            if (attempt.length !== correctSentence.length) {
+                feedback.textContent = "Incorrect number of words.";
+                wrongSound.play();
+                return;
+            }
+            for (let i = 0; i < correctSentence.length; i++) {
+                if (attempt[i] !== correctSentence[i]) {
+                    feedback.textContent = "Incorrect order or words.";
+                    wrongSound.play();
+                    return;
+                }
+            }
+            feedback.textContent = "Correct! Great job!";
+            correctSound.play();
+            setTimeout(() => {
+                currentIndex++;
+                if (currentIndex < challenges.length) {
+                    renderChallenge();
+                } else {
+                    sentenceTarget.textContent = "You have completed all challenges in this topic!";
+                    wordBank.innerHTML = "";
+                    userInput.innerHTML = "";
+                }
+            }, 1500);
+        };
+
+        document.getElementById("giveUpBtn").onclick = () => {
+            const correctSentence = challenges[currentIndex].km;
+            userInput.innerHTML = "";
+            correctSentence.forEach(word => {
+                const span = document.createElement("span");
+                span.className = "user-word";
+                span.textContent = word;
+                userInput.appendChild(span);
+            });
+            feedback.textContent = "The correct answer is shown above.";
+        };
+
+        document.getElementById("clearBtn").onclick = () => {
+            const usedWords = document.querySelectorAll(".word.used");
+            usedWords.forEach(word => word.classList.remove("used"));
+            userInput.innerHTML = "";
+            feedback.textContent = "";
+        };
+
+        renderChallenge();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khmer Comparison Grammar Game</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Noto Sans Khmer', sans-serif;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .game-container {
+            background: #fffdf7;
+            padding: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            max-width: 700px;
+            width: 100%;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #5e548e;
+        }
+
+        .instruction {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #43cea2, #185a9d);
+            width: 0%;
+            transition: width 0.4s ease-in-out;
+        }
+
+        .question-number {
+            color: #777;
+            margin-bottom: 0.5rem;
+        }
+
+        .khmer-question {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+            color: #111;
+        }
+
+        .translation {
+            margin-bottom: 1.25rem;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        button.choice {
+            padding: 1rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 14px;
+            font-weight: bold;
+            background-color: #a18cd1;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button.choice:hover {
+            background-color: #7b68ee;
+            transform: translateY(-2px);
+        }
+
+        .choice.correct {
+            background-color: #28a745 !important;
+        }
+
+        .choice.incorrect {
+            background-color: #dc3545 !important;
+        }
+
+        .feedback-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .feedback {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .score {
+            font-weight: bold;
+        }
+
+        .restart {
+            margin-top: 2rem;
+            background-color: #5e548e;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 14px;
+            border: none;
+            cursor: pointer;
+            display: none;
+        }
+
+        #finalScore {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game-container">
+        <h1>🕹️ Khmer Comparison Grammar Game</h1>
+        <p class="instruction">Fill in the blank using the correct Khmer comparison word.</p>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div id="game">
+            <div class="question-number" id="questionNumber"></div>
+            <div class="khmer-question" id="question"></div>
+            <div class="translation" id="translation"></div>
+            <div class="choices">
+                <button class="choice" data-choice="0"></button>
+                <button class="choice" data-choice="1"></button>
+            </div>
+            <div class="feedback-row">
+                <div class="feedback" id="feedback"></div>
+                <div class="score" id="score"></div>
+            </div>
+            <div id="finalScore"></div>
+            <button id="restartButton" class="restart">Restart Game</button>
+        </div>
+    </div>
+
+    <audio id="click" src="https://commondatastorage.googleapis.com/codeskulptor-assets/week7-button.m4a"></audio>
+    <audio id="correct" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
+    <audio id="wrong" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
+
+    <script>
+        const questions = [
+            {
+                sentence: "កូនប្រុសមានសៀវភៅ ______ កូនស្រី។",
+                options: ["ច្រើនជាង", "តិចជាង"],
+                correct: 0,
+                translation: "The boy has more books than the girl."
+            },
+            {
+                sentence: "សួនច្បារ​នេះ​មានផ្កា ______ ទាំងអស់។",
+                options: ["ពេញលេញ", "ស្មើគ្នា"],
+                correct: 0,
+                translation: "This garden has all the flowers (completely full)."
+            },
+            {
+                sentence: "ខ្ញុំខ្លាចអណ្តើក ______ ខ្មែរទាំងអស់។",
+                options: ["ច្រើនជាងគេ", "ស្មើគ្នា"],
+                correct: 0,
+                translation: "I’m more afraid of turtles than all Cambodians."
+            },
+            {
+                sentence: "ប្អូនស្រីមានអាយុ ______ បងស្រី។",
+                options: ["ស្មើគ្នា", "ច្រើនជាង"],
+                correct: 0,
+                translation: "The younger sister is the same age as the older sister."
+            },
+            {
+                sentence: "ខ្ញុំផឹកទឹក ______ គេ។",
+                options: ["តិចជាង", "ច្រើនជាងគេ"],
+                correct: 0,
+                translation: "I drink less water than him."
+            },
+            {
+                sentence: "អ្នកគ្រូចេះភាសា ______ អ្នកសិស្ស។",
+                options: ["ច្រើនជាង", "តិចជាង"],
+                correct: 0,
+                translation: "The teacher knows more languages than the student."
+            },
+            {
+                sentence: "អាហារពេលនេះឆ្ងាញ់ ______ ពេលមុន។",
+                options: ["ស្មើគ្នា", "ច្រើនជាង"],
+                correct: 1,
+                translation: "This meal is more delicious than the last one."
+            },
+            {
+                sentence: "បងប្អូនមានកម្ពស់ ______ គ្នា។",
+                options: ["ស្មើគ្នា", "ច្រើនជាងគេ"],
+                correct: 0,
+                translation: "The siblings are the same height."
+            },
+            {
+                sentence: "ខ្ញុំធ្វើការងារ ______ មិត្តភក្តិ។",
+                options: ["ច្រើនជាង", "តិចជាង"],
+                correct: 1,
+                translation: "I do less work than my friend."
+            },
+            {
+                sentence: "ក្រុមនេះមានសមាជិក ______ គ្រប់ក្រុម។",
+                options: ["ច្រើនជាងគេ", "តិចជាងគេ"],
+                correct: 0,
+                translation: "This group has the most members of all."
+            }
+        ];
+
+        let current = 0;
+        let score = 0;
+
+        function playSound(id) {
+            document.getElementById(id).play();
+        }
+
+        function updateProgressBar() {
+            const progress = ((current) / questions.length) * 100;
+            document.getElementById("progress").style.width = progress + "%";
+        }
+
+        function loadQuestion() {
+            const q = questions[current];
+            document.getElementById("questionNumber").textContent = `Question ${current + 1} of ${questions.length}`;
+            document.getElementById("question").textContent = q.sentence;
+            document.getElementById("translation").textContent = q.translation;
+            document.querySelectorAll(".choice").forEach((btn, i) => {
+                btn.textContent = q.options[i];
+                btn.disabled = false;
+                btn.classList.remove("correct", "incorrect");
+                btn.onclick = () => checkAnswer(i);
+            });
+            document.getElementById("score").textContent = `Score: ${score} / ${questions.length}`;
+            document.getElementById("restartButton").style.display = "none";
+            document.getElementById("finalScore").textContent = "";
+            document.querySelector(".choices").style.display = "flex";
+            document.getElementById("feedback").textContent = "";
+            updateProgressBar();
+        }
+
+        function checkAnswer(selected) {
+            playSound("click");
+            const q = questions[current];
+            const feedback = document.getElementById("feedback");
+            const buttons = document.querySelectorAll(".choice");
+
+            buttons.forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === q.correct) btn.classList.add("correct");
+                else if (i === selected) btn.classList.add("incorrect");
+            });
+
+            if (selected === q.correct) {
+                playSound("correct");
+                feedback.textContent = "✅ Correct!";
+                feedback.className = "feedback correct";
+                score++;
+            } else {
+                playSound("wrong");
+                feedback.textContent = "❌ Incorrect!";
+                feedback.className = "feedback incorrect";
+            }
+
+            setTimeout(() => {
+                current++;
+                if (current < questions.length) {
+                    loadQuestion();
+                } else {
+                    document.getElementById("questionNumber").textContent = "";
+                    document.getElementById("question").textContent = "🎉 Game Over!";
+                    document.getElementById("translation").textContent = "";
+                    document.querySelector(".choices").style.display = "none";
+                    document.getElementById("score").textContent = "";
+                    document.getElementById("finalScore").textContent = `Final Score: ${score} / ${questions.length}`;
+                    document.getElementById("restartButton").style.display = "inline-block";
+                    feedback.textContent = "";
+                    updateProgressBar();
+                }
+            }, 1200);
+        }
+
+        document.getElementById("restartButton").addEventListener("click", () => {
+            current = 0;
+            score = 0;
+            loadQuestion();
+        });
+
+        loadQuestion();
+    </script>
+</body>
+
+</html>

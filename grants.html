@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Grant Tracker | Cambodian Dance Group</title>
+    <script defer>
+        function addGrant(event) {
+            event.preventDefault();
+
+            const table = document.getElementById('grantTable');
+            const row = table.insertRow();
+            const name = document.getElementById('grantName').value;
+            const deadline = document.getElementById('grantDeadline').value;
+            const status = document.getElementById('grantStatus').value;
+            const requirements = document.getElementById('grantRequirements').value;
+
+            row.innerHTML = `
+        <td>${name}</td>
+        <td>${deadline}</td>
+        <td>${status}</td>
+        <td>${requirements}</td>
+      `;
+
+            document.getElementById('grantForm').reset();
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+
+        header {
+            background: #8e44ad;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 900px;
+            margin: auto;
+            background: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ccc;
+        }
+
+        th,
+        td {
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        form>div {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.5rem;
+        }
+
+        button {
+            background: #8e44ad;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Grant Tracker for Cambodian Dance Group</h1>
+    </header>
+    <main>
+        <section>
+            <h2>How to Find and Apply for Grants</h2>
+            <p><strong>1. Know Your Mission and Needs:</strong> Define what your group stands for and what you're
+                seeking funding for — such as costumes, instructor stipends, travel, food, or workshops.</p>
+            <p><strong>2. Where to Find Grants:</strong></p>
+            <ul>
+                <li><strong>Local:</strong> California Arts Council, Oakland Cultural Funding Program</li>
+                <li><strong>Foundations:</strong> East Bay Community Foundation, Hewlett Foundation</li>
+                <li><strong>National:</strong> National Endowment for the Arts, Dance/USA Fellowships</li>
+                <li><strong>Databases:</strong> Candid Foundation Directory, Instrumentl, GrantWatch</li>
+                <li><strong>Community Orgs:</strong> Cambodian Community Development Inc., Asian Pacific Fund</li>
+            </ul>
+            <p><strong>3. Track & Organize:</strong> Use this website to monitor deadlines, statuses, and requirements
+                for each grant.</p>
+            <p><strong>4. Build a Grant Calendar:</strong> Keep a shared calendar of due dates and reminders.</p>
+            <p><strong>5. Prepare a Toolkit:</strong> Save templates for group bios, mission statements, budgets,
+                letters of support, and previous proposals.</p>
+            <p><strong>6. Write Thoughtfully:</strong> Focus on community impact, follow all instructions exactly, and
+                keep the language clear and specific.</p>
+            <p><strong>7. Follow Up:</strong> Thank funders if awarded. If not, ask for feedback and improve for next
+                time.</p>
+            <p><strong>Tips:</strong> Start with small, local grants. Reapply often. Collaborate with other
+                organizations to strengthen applications.</p>
+        </section>
+
+        <h2>Tracked Grants</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Grant Name</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Requirements</th>
+                </tr>
+            </thead>
+            <tbody id="grantTable">
+                <!-- Entries go here -->
+            </tbody>
+        </table>
+
+        <h2>Add New Grant</h2>
+        <form id="grantForm" onsubmit="addGrant(event)">
+            <div>
+                <label for="grantName">Grant Name</label>
+                <input type="text" id="grantName" required />
+            </div>
+            <div>
+                <label for="grantDeadline">Deadline</label>
+                <input type="date" id="grantDeadline" required />
+            </div>
+            <div>
+                <label for="grantStatus">Status</label>
+                <select id="grantStatus">
+                    <option value="Planning">Planning</option>
+                    <option value="Submitted">Submitted</option>
+                    <option value="Awarded">Awarded</option>
+                    <option value="Declined">Declined</option>
+                </select>
+            </div>
+            <div>
+                <label for="grantRequirements">Requirements</label>
+                <textarea id="grantRequirements" rows="3"></textarea>
+            </div>
+            <button type="submit">Add Grant</button>
+        </form>
+    </main>
+</body>
+
+</html>
