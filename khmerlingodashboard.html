@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KhmerLingo Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer&family=Poppins:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --background: #f4f4f8;
+            --card-bg: #ffffff;
+            --highlight: #f8f8ff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: #333;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 240px;
+            min-height: 100vh;
+            background: var(--primary);
+            color: #fff;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h2 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 1rem 0;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #dcd6ff;
+        }
+
+        .main {
+            flex: 1;
+            padding: 3rem 4rem;
+        }
+
+        .section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1.25rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2.5rem;
+        }
+
+        .section h3 {
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+        }
+
+        .flashcard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--highlight);
+            padding: 1.25rem 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease;
+        }
+
+        .flashcard:hover {
+            transform: translateY(-2px);
+        }
+
+        .flashcard span {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.3s ease;
+        }
+
+        .button:hover {
+            background: #5b4dcd;
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <h2>KhmerLingo</h2>
+        <a href="#">🏠 Dashboard</a>
+        <a href="#">📚 Flashcards</a>
+        <a href="#">💬 Phrases</a>
+        <a href="#">🔧 Technical Terms</a>
+        <a href="#">📈 Progress</a>
+        <a href="#">⚙️ Settings</a>
+    </aside>
+
+    <main class="main">
+        <div class="section">
+            <h3>Welcome Back!</h3>
+            <p>Ready to continue your Khmer journey? Here's your daily learning pack.</p>
+        </div>
+
+        <div class="section">
+            <h3>🧠 Word of the Day</h3>
+            <div class="flashcard">
+                <span>ទឹក - Water</span>
+                <button class="button" onclick="alert('Playing pronunciation')">🔊 Play</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>💬 Phrase of the Day</h3>
+            <div class="flashcard">
+                <span>សុខសប្បាយទេ? - How are you?</span>
+                <button class="button" onclick="alert('Playing pronunciation')">🔊 Play</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>📈 Your Progress</h3>
+            <p><strong>45 words</strong> mastered | <strong>12 lessons</strong> completed this month</p>
+        </div>
+    </main>
+</body>
+
+</html>

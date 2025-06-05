@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khmer Language Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation Styles */
+        nav {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 140px);
+            padding: 2rem 0;
+        }
+
+        /* Page Styles */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .page-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-header h1 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .dashboard-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Game Selection */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .game-header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .game-body {
+            padding: 1.5rem;
+        }
+
+        .difficulty-badge {
+            background: #28a745;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .difficulty-badge.intermediate {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .difficulty-badge.advanced {
+            background: #dc3545;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #e9ecef;
+            border-radius: 10px;
+            padding: 0.25rem;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            background: #28a745;
+            height: 1rem;
+            border-radius: 8px;
+            transition: width 0.3s ease;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">🇰🇭 Khmer Learn</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" onclick="showPage('homepage')">Home</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('features')">Features</a></li>
+                <li><a href="#" onclick="showPage('pricing')">Pricing</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                <li><a href="#" onclick="showPage('login')">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <!-- Homepage -->
+            <div id="homepage" class="page active">
+                <div class="hero">
+                    <h1>Learn Khmer Language</h1>
+                    <p>Master Cambodian with interactive games, lessons, and cultural insights</p>
+                    <button class="btn" onclick="showPage('login')">Get Started</button>
+                    <button class="btn btn-secondary" onclick="showPage('features')">Learn More</button>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>🎮 Interactive Games</h3>
+                        <p>Learn through fun, engaging games designed for all skill levels</p>
+                        <button class="btn" onclick="showPage('features')">Explore Games</button>
+                    </div>
+                    <div class="card">
+                        <h3>📚 Structured Lessons</h3>
+                        <p>Follow our comprehensive curriculum from beginner to advanced</p>
+                        <button class="btn" onclick="showPage('features')">View Lessons</button>
+                    </div>
+                    <div class="card">
+                        <h3>🏆 Track Progress</h3>
+                        <p>Monitor your learning journey with detailed progress tracking</p>
+                        <button class="btn" onclick="showPage('features')">See Features</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Page -->
+            <div id="about" class="page">
+                <div class="page-header">
+                    <h1>About Khmer Learn</h1>
+                    <p>Your comprehensive platform for mastering the Cambodian language</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>Our Mission</h3>
+                        <p>To make Khmer language learning accessible, engaging, and effective for learners worldwide.
+                            We believe in preserving and sharing Cambodia's rich linguistic heritage.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Our Approach</h3>
+                        <p>We combine traditional language learning methods with modern technology, gamification, and
+                            cultural context to create an immersive learning experience.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Our Team</h3>
+                        <p>Native Khmer speakers, experienced educators, and technology experts working together to
+                            bring you the best learning experience.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Page -->
+            <div id="features" class="page">
+                <div class="page-header">
+                    <h1>Features</h1>
+                    <p>Discover what makes our platform unique</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>🎯 Skill-Based Learning</h3>
+                        <p>Content organized by skill level with clear progression paths</p>
+                    </div>
+                    <div class="card">
+                        <h3>🎮 Interactive Games</h3>
+                        <p>Grammar quizzes, vocabulary games, and cultural challenges</p>
+                    </div>
+                    <div class="card">
+                        <h3>📊 Progress Tracking</h3>
+                        <p>Detailed analytics on your learning journey and achievements</p>
+                    </div>
+                    <div class="card">
+                        <h3>🏆 Achievements</h3>
+                        <p>Badges, certificates, and leaderboards to motivate learning</p>
+                    </div>
+                    <div class="card">
+                        <h3>👥 Community</h3>
+                        <p>Connect with other learners and native speakers</p>
+                    </div>
+                    <div class="card">
+                        <h3>📱 Mobile Friendly</h3>
+                        <p>Learn anywhere, anytime on any device</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing Page -->
+            <div id="pricing" class="page">
+                <div class="page-header">
+                    <h1>Pricing Plans</h1>
+                    <p>Choose the plan that works best for you</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>Free Plan</h3>
+                        <p><strong>$0/month</strong></p>
+                        <ul style="text-align: left; margin: 1rem 0;">
+                            <li>5 games per day</li>
+                            <li>Basic lessons</li>
+                            <li>Progress tracking</li>
+                            <li>Community access</li>
+                        </ul>
+                        <button class="btn" onclick="showPage('login')">Get Started</button>
+                    </div>
+                    <div class="card">
+                        <h3>Premium Plan</h3>
+                        <p><strong>$9.99/month</strong></p>
+                        <ul style="text-align: left; margin: 1rem 0;">
+                            <li>Unlimited games</li>
+                            <li>All lessons & content</li>
+                            <li>Advanced analytics</li>
+                            <li>Priority support</li>
+                            <li>Offline access</li>
+                        </ul>
+                        <button class="btn" onclick="showPage('login')">Start Free Trial</button>
+                    </div>
+                    <div class="card">
+                        <h3>Pro Plan</h3>
+                        <p><strong>$19.99/month</strong></p>
+                        <ul style="text-align: left; margin: 1rem 0;">
+                            <li>Everything in Premium</li>
+                            <li>1-on-1 tutoring</li>
+                            <li>Custom learning paths</li>
+                            <li>Certification prep</li>
+                            <li>Business Khmer content</li>
+                        </ul>
+                        <button class="btn" onclick="showPage('login')">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Page -->
+            <div id="contact" class="page">
+                <div class="page-header">
+                    <h1>Contact Us</h1>
+                    <p>We'd love to hear from you</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>Get in Touch</h3>
+                        <form>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" placeholder="Your name">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea rows="5" placeholder="How can we help you?"></textarea>
+                            </div>
+                            <button type="submit" class="btn">Send Message</button>
+                        </form>
+                    </div>
+                    <div class="card">
+                        <h3>Other Ways to Reach Us</h3>
+                        <p><strong>Email:</strong> support@khmerlearn.com</p>
+                        <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+                        <p><strong>Address:</strong> 123 Learning St, Education City, EC 12345</p>
+                        <h4 style="margin-top: 2rem;">Follow Us</h4>
+                        <p>Facebook | Twitter | Instagram | LinkedIn</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login Page -->
+            <div id="login" class="page">
+                <div class="page-header">
+                    <h1>Sign In / Sign Up</h1>
+                    <p>Access your learning dashboard</p>
+                </div>
+
+                <div style="max-width: 400px; margin: 0 auto;">
+                    <div class="card">
+                        <h3>Sign In</h3>
+                        <form>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" placeholder="Password">
+                            </div>
+                            <button type="button" class="btn" onclick="showPage('dashboard')"
+                                style="width: 100%; margin-bottom: 1rem;">Sign In</button>
+                            <button type="button" class="btn btn-secondary" onclick="showPage('dashboard')"
+                                style="width: 100%;">Create Account</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard -->
+            <div id="dashboard" class="page">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showPage('homepage')">Home</a> > Dashboard
+                </div>
+
+                <div class="page-header">
+                    <h1>Welcome back, Student!</h1>
+                    <p>Continue your Khmer learning journey</p>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">127</div>
+                        <div class="stat-label">Games Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Day Streak</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">68%</div>
+                        <div class="stat-label">Course Progress</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Badges Earned</div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Navigation -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card" onclick="showPage('games')">
+                        <div class="icon">🎮</div>
+                        <h3>Games & Quizzes</h3>
+                        <p>Practice with interactive games</p>
+                    </div>
+                    <div class="dashboard-card" onclick="showPage('lessons')">
+                        <div class="icon">📚</div>
+                        <h3>Lessons</h3>
+                        <p>Structured learning content</p>
+                    </div>
+                    <div class="dashboard-card" onclick="showPage('progress')">
+                        <div class="icon">📊</div>
+                        <h3>Progress</h3>
+                        <p>Track your learning journey</p>
+                    </div>
+                    <div class="dashboard-card" onclick="showPage('achievements')">
+                        <div class="icon">🏆</div>
+                        <h3>Achievements</h3>
+                        <p>Badges and certificates</p>
+                    </div>
+                    <div class="dashboard-card" onclick="showPage('tests')">
+                        <div class="icon">📝</div>
+                        <h3>Practice Tests</h3>
+                        <p>Assess your knowledge</p>
+                    </div>
+                    <div class="dashboard-card" onclick="showPage('community')">
+                        <div class="icon">👥</div>
+                        <h3>Community</h3>
+                        <p>Connect with learners</p>
+                    </div>
+                    <div class="dashboard-card" onclick="showPage('profile')">
+                        <div class="icon">⚙️</div>
+                        <h3>Settings</h3>
+                        <p>Manage your profile</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Games Page -->
+            <div id="games" class="page">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showPage('dashboard')">Dashboard</a> > Games & Quizzes
+                </div>
+
+                <div class="page-header">
+                    <h1>Games & Quizzes</h1>
+                    <p>Choose your skill level and start playing</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>🟢 Beginner Games</h3>
+                        <p>Perfect for those just starting their Khmer journey</p>
+                        <button class="btn" onclick="showPage('beginner-games')">Start Playing</button>
+                    </div>
+                    <div class="card">
+                        <h3>🟡 Intermediate Games</h3>
+                        <p>Challenge yourself with grammar and cultural context</p>
+                        <button class="btn" onclick="showPage('intermediate-games')">Continue Learning</button>
+                    </div>
+                    <div class="card">
+                        <h3>🔴 Advanced Games</h3>
+                        <p>Master complex concepts and business language</p>
+                        <button class="btn" onclick="showPage('advanced-games')">Test Your Skills</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Beginner Games -->
+            <div id="beginner-games" class="page">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showPage('dashboard')">Dashboard</a> >
+                    <a href="#" onclick="showPage('games')">Games</a> > Beginner
+                </div>
+
+                <div class="page-header">
+                    <h1>Beginner Games</h1>
+                    <p>Start your Khmer learning adventure</p>
+                </div>
+
+                <div class="game-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h3>Alphabet Recognition</h3>
+                        </div>
+                        <div class="game-body">
+                            <div class="difficulty-badge">Beginner</div>
+                            <p>Learn the Khmer alphabet through interactive matching games</p>
+                            <button class="btn">Play Now</button>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h3>Basic Vocabulary</h3>
+                        </div>
+                        <div class="game-body">
+                            <div class="difficulty-badge">Beginner</div>
+                            <p>Build your vocabulary with common words and phrases</p>
+                            <button class="btn">Play Now</button>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h3>Number Games</h3>
+                        </div>
+                        <div class="game-body">
+                            <div class="difficulty-badge">Beginner</div>
+                            <p>Master Khmer numbers through fun counting games</p>
+                            <button class="btn">Play Now</button>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h3>Colors & Shapes</h3>
+                        </div>
+                        <div class="game-body">
+                            <div class="difficulty-badge">Beginner</div>
+                            <p>Learn colors and shapes in Khmer language</p>
+                            <button class="btn">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Intermediate Games -->
+            <div id="intermediate-games" class="page">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showPage('dashboard')">Dashboard</a> >
+                    <a href="#" onclick="showPage('games')">Games</a> > Intermediate
+                </div>
+
+                <div class="page-header">
+                    <h1>Intermediate Games</h1>
+                    <p>Challenge your growing Khmer skills</p>
+                </div>
+
+                <div class="game-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h3>Grammar Quiz</h3>
+                        </div>
+                        <div class="game-body">
+                            <div class="difficulty-badge intermediate">Intermediate</div>
+                            <p>Test your understanding of Khmer grammar rules</p>
+                            <button class="btn" onclick="startGrammarQuiz()">Play Now</button>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h3>Cultural Context</h3>
+                        </div>
+                        <div class="game-body">
+                            <div class="difficulty-badge intermediate">Intermediate</div>
+                            <p>Learn appropriate responses in different situations</p>
+                            <button class="btn">Play Now</button>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h3>Sentence Building</h3>
+                        </div>
+                        <div class="game-body">
+                            <div class="difficulty-badge intermediate">Intermediate</div>
+                            <p>Practice constructing proper Khmer sentences</p>
+                            <button class="btn">Play Now</button>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h3>Family & Relationships</h3>
+                        </div>
+                        <div class="game-body">
+                            <div class="difficulty-badge intermediate">Intermediate</div>
+                            <p>Master family terms and relationship vocabulary</p>
+                            <button class="btn">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Games -->
+            <div id="advanced-games" class="page">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showPage('dashboard')">Dashboard</a> >
+                    <a href="#" onclick="showPage('games')">Games</a> > Advanced
+                </div>
+
+                <div class="page-header">
+                    <h1>Advanced Games</h1>
+                    <p>Master complex Khmer language concepts</p>
+                </div>
+
+                <div class="game-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h3>Business Khmer</h3>
+                        </div>
+                        <div class="game-body">
+                            <div class="difficulty-badge advanced">Advanced</div>
+                            <p>Professional language for business situations</p>
+                            <button class="btn">Play Now</button>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h3>Literature Reading</h3>
+                        </div>
+                        <div class="game-body">
+                            <div class="difficulty-badge advanced">Advanced</div>
+                            <p>Comprehend classical and modern Khmer texts</p>
+                            <button class="btn">Play Now</button>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h3>Advanced Grammar</h3>
+                        </div>
+                        <div class="game-body">
+                            <div class="difficulty-badge advanced">Advanced</div>
+                            <p>Master complex grammatical structures</p>
+                            <button class="btn">Play Now</button>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h3>Idioms & Proverbs</h3>
+                        </div>
+                        <div class="game-body">
+                            <div class="difficulty-badge advanced">Advanced</div>
+                            <p>Learn traditional Khmer expressions</p>
+                            <button class="btn">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lessons Page -->

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khmer Language Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sans bg-gray-100 text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md">
+        <div class="max-w-6xl mx-auto flex justify-between items-center px-4 py-4">
+            <div class="text-xl font-bold">🇰🇭 Khmer Learn</div>
+            <ul class="hidden md:flex gap-6">
+                <li><a href="#" onclick="showPage('homepage')" class="hover:opacity-80">Home</a></li>
+                <li><a href="#" onclick="showPage('about')" class="hover:opacity-80">About</a></li>
+                <li><a href="#" onclick="showPage('features')" class="hover:opacity-80">Features</a></li>
+                <li><a href="#" onclick="showPage('pricing')" class="hover:opacity-80">Pricing</a></li>
+                <li><a href="#" onclick="showPage('contact')" class="hover:opacity-80">Contact</a></li>
+                <li><a href="#" onclick="showPage('login')" class="hover:opacity-80">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <main class="pt-24 pb-10 min-h-screen">
+        <div class="max-w-6xl mx-auto px-4">
+            <!-- Homepage -->
+            <div id="homepage" class="page active">
+                <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-center p-10 rounded-xl mb-8">
+                    <h1 class="text-4xl font-bold mb-2">Learn Khmer Language</h1>
+                    <p class="text-lg mb-6">Master Cambodian with interactive games, lessons, and cultural insights</p>
+                    <div class="flex justify-center gap-4">
+                        <button onclick="showPage('login')"
+                            class="bg-white text-indigo-600 px-6 py-2 rounded-md font-semibold hover:scale-105 transition">Get
+                            Started</button>
+                        <button onclick="showPage('features')"
+                            class="bg-gray-800 px-6 py-2 rounded-md hover:bg-gray-700 transition">Learn More</button>
+                    </div>
+                </div>
+
+                <!-- Sections -->
+                <div class="space-y-10">
+                    <!-- Beginner -->
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-700 mb-4">Beginner</h2>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition flex flex-col">
+                                <h3 class="text-indigo-600 font-bold mb-2">Alphabet & Pronunciation</h3>
+                                <p class="text-sm mb-4">
+                                    Learn to read, write, and pronounce Khmer letters with step-by-step guidance.
+                                </p>
+                                <div class="mt-auto">
+                                    <button onclick="showPage('features')"
+                                        class="bg-indigo-600 text-white px-4 py-2 rounded">Start Module</button>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition flex flex-col">
+                                <h3 class="text-indigo-600 font-bold mb-2">Greetings & Introductions</h3>
+                                <p class="text-sm mb-4">Practice common greetings, polite phrases, and how to introduce
+                                    yourself clearly.
+                                </p>
+                                <div class="mt-auto">
+                                    <button onclick="showPage('features')"
+                                        class="bg-indigo-600 text-white px-4 py-2 rounded">Start Module</button>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition flex flex-col">
+                                <h3 class="text-indigo-600 font-bold mb-2">Numbers, Dates & Time</h3>
+                                <p class="text-sm mb-4">Master counting, telling time, and using dates in everyday Khmer
+                                    conversations.
+                                </p>
+                                <div class="mt-auto">
+                                    <button onclick="showPage('features')"
+                                        class="bg-indigo-600 text-white px-4 py-2 rounded">Start Module</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Intermediate -->
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-700 mb-4">Intermediate</h2>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition flex flex-col">
+                                <h3 class="text-indigo-600 font-bold mb-2">Conversational Khmer</h3>
+                                <p class="text-sm mb-4">Improve fluency with practical dialogues for daily routines,
+                                    family, and activities.
+                                </p>
+                                <div class="mt-auto">
+                                    <button onclick="showPage('features')"
+                                        class="bg-indigo-600 text-white px-4 py-2 rounded">Start Module</button>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition flex flex-col">
+                                <h3 class="text-indigo-600 font-bold mb-2">Time, Tense & Sequence</h3>
+                                <p class="text-sm mb-4">Understand how Khmer expresses past, present, and future using
+                                    adverbs and markers.</p>
+                                <div class="mt-auto">
+                                    <button onclick="showPage('features')"
+                                        class="bg-indigo-600 text-white px-4 py-2 rounded">Start Module</button>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition flex flex-col">
+                                <h3 class="text-indigo-600 font-bold mb-2">Khmer in Public</h3>
+                                <p class="text-sm mb-4">Learn useful phrases for shopping, dining, asking for help, and
+                                    public transport.</p>
+                                <div class="mt-auto">
+                                    <button onclick="showPage('features')"
+                                        class="bg-indigo-600 text-white px-4 py-2 rounded">Start Module</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced -->
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-700 mb-4">Advanced</h2>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition flex flex-col">
+                                <h3 class="text-indigo-600 font-bold mb-2">Formal & Literary Registers</h3>
+                                <p class="text-sm mb-4">Explore elegant Khmer used in literature, speeches, and official
+                                    communication.
+
+
+                                </p>
+                                <div class="mt-auto">
+                                    <button onclick="showPage('features')"
+                                        class="bg-indigo-600 text-white px-4 py-2 rounded">Start Module</button>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition flex flex-col">
+                                <h3 class="text-indigo-600 font-bold mb-2">Complex Sentence Structures</h3>
+                                <p class="text-sm mb-4">Build fluency with compound/complex sentences, connectors, and
+                                    advanced grammar.</p>
+                                <div class="mt-auto">
+                                    <button onclick="showPage('features')"
+                                        class="bg-indigo-600 text-white px-4 py-2 rounded">Start Module</button>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition flex flex-col">
+                                <h3 class="text-indigo-600 font-bold mb-2">Rhetoric & Persuasion</h3>
+                                <p class="text-sm mb-4">Practice using rhetorical strategies, tone, and emphasis to
+                                    persuade and impress.</p>
+                                <div class="mt-auto">
+                                    <button onclick="showPage('features')"
+                                        class="bg-indigo-600 text-white px-4 py-2 rounded">Start Module</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-center py-6 mt-10">
+        <div class="max-w-4xl mx-auto">
+            <p>&copy; 2025 Khmer Learn. All rights reserved.</p>
+            <p class="text-sm mt-2">Built with ❤️ to support Khmer language learners around the world.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

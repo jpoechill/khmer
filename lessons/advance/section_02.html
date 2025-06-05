@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Khmer - Module 2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78, #38a169);
+            border-radius: 10px;
+            width: 0%;
+            animation: progressLoad 2s ease-out forwards;
+        }
+
+        @keyframes progressLoad {
+            to {
+                width: 85%;
+            }
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s ease-out forwards;
+        }
+
+        .section:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .section:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .section:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .section:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+
+        .section:nth-child(6) {
+            animation-delay: 0.5s;
+        }
+
+        .section:nth-child(7) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .subsection {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f7fafc;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .subsection h3 {
+            color: #2d3748;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .khmer-text {
+            font-family: 'Khmer OS', serif;
+            font-size: 1.1rem;
+            color: #2d3748;
+            background: #e6fffa;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            border-left: 3px solid #38b2ac;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .register-card {
+            background: linear-gradient(135deg, #fed7d7 0%, #fef5e7 100%);
+            border: 2px solid #f56565;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .register-card h4 {
+            color: #c53030;
+            margin-bottom: 0.5rem;
+        }
+
+        .honorific-card {
+            background: linear-gradient(135deg, #e6fffa 0%, #f0fff4 100%);
+            border: 2px solid #38b2ac;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .honorific-card h4 {
+            color: #2c7a7b;
+            margin-bottom: 0.5rem;
+        }
+
+        .cultural-card {
+            background: linear-gradient(135deg, #e9d8fd 0%, #faf5ff 100%);
+            border: 2px solid #9f7aea;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .cultural-card h4 {
+            color: #6b46c1;
+            margin-bottom: 0.5rem;
+        }
+
+        .vocabulary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .vocabulary-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .vocabulary-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .vocabulary-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .pattern {
+            background: #fef5e7;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #744210;
+            margin: 0.5rem 0;
+            border-left: 3px solid #ed8936;
+        }
+
+        .exercise-section {
+            background: linear-gradient(135deg, #e6fffa 0%, #f0fff4 100%);
+            border: 2px solid #38b2ac;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .exercise-section h3 {
+            color: #2c7a7b;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .exercise-icon {
+            background: #38b2ac;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .mini-project {
+            background: linear-gradient(135deg, #fed7d7 0%, #fef5e7 100%);
+            border: 2px solid #f56565;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .mini-project h3 {
+            color: #c53030;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .tab-container {
+            margin-bottom: 2rem;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            background: #e2e8f0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .context-box {
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .context-box h5 {
+            color: #92400e;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .floating-nav {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            margin: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: #667eea;
+            transform: scale(1.2);
+        }
+
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .scenario-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #667eea;
+        }
+
+        .scenario-card h4 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .dialogue {
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scenario-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-buttons {
+                flex-direction: column;
+            }
+
+            .floating-nav {
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="floating-nav">
+        <div class="nav-dot active" data-section="0"></div>
+        <div class="nav-dot" data-section="1"></div>
+        <div class="nav-dot" data-section="2"></div>
+        <div class="nav-dot" data-section="3"></div>
+        <div class="nav-dot" data-section="4"></div>
+        <div class="nav-dot" data-section="5"></div>
+        <div class="nav-dot" data-section="6"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📚 Advanced Khmer Vocabulary</h1>
+            <p class="subtitle">Module 2: Vocabulary & Cultural Contexts</p>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p><strong>Goal:</strong> Master sophisticated vocabulary, formal registers, and cultural nuances in
+                professional and academic contexts</p>
+        </div>
+
+        <div class="section" data-section="1">
+            <h2><span class="section-icon">1</span>Formal Registers & Honorifics</h2>
+
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="showTab('registers')">Register Levels</button>
+                    <button class="tab-button" onclick="showTab('honorifics')">Honorifics</button>
+                    <button class="tab-button" onclick="showTab('titles')">Titles & Address</button>
+                </div>
+
+                <div id="registers" class="tab-content active">
+                    <div class="subsection">
+                        <h3>Register Hierarchy (ពីថ្នាក់ភាសា)</h3>
+
+                        <div class="register-card">
+                            <h4>🏛️ Royal/Court Register (រាជាសព្ទ)</h4>
+                            <p>Used for royal family, religious ceremonies, and highest formal occasions</p>
+                            <div class="example-grid">
+                                <div class="example-card">
+                                    <h5>Royal Vocabulary:</h5>
+                                    <div class="khmer-text">សម្តេច - His/Her Majesty</div>
+                                    <div class="khmer-text">ព្រះករុណា - Royal mercy/grace</div>
+                                    <div class="khmer-text">ទ្រង់ - royal pronoun (he/she)</div>
+                                    <div class="khmer-text">យាង - to go (royal)</div>
+                                    <div class="khmer-text">សកល - to eat (royal)</div>
+                                </div>
+                                <div class="example-card">
+                                    <h5>Example Usage:</h5>
+                                    <div class="khmer-text">ព្រះករុណាសម្តេចព្រះបរមរតនកោដ្ឋ ទ្រង់យាងទៅវត្តព្រះកែវ។</div>
+                                    <p><em>His Majesty the King goes to Wat Preah Keo.</em></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="honorific-card">
+                            <h4>🎓 High Formal Register (ភាសាផ្លូវការខ្ពស់)</h4>
+                            <p>Academic, diplomatic, official government communications</p>
+                            <div class="example-grid">
+                                <div class="example-card">
+                                    <h5>Formal Vocabulary:</h5>
+                                    <div class="khmer-text">អ្នកជំនាញ - expert/specialist</div>
+                                    <div class="khmer-text">ការអនុវត្តន៍ - implementation</div>
+                                    <div class="khmer-text">យុទ្ធសាស្រ្ត - strategy</div>
+                                    <div class="khmer-text">ការវិភាគ - analysis</div>
+                                    <div class="khmer-text">សមិទ្ធផល - achievement</div>
+                                </div>
+                                <div class="example-card">
+                                    <h5>Example Context:</h5>
+                                    <div class="khmer-text">ការអនុវត្តន៍យុទ្ធសាស្រ្តអភិវឌ្ឍន៍ជាតិនេះ
+                                        តម្រូវឱ្យមានការវិភាគយ៉ាងម៉ត់ចត់។</div>
+                                    <p><em>The implementation of this national development strategy requires careful
+                                            analysis.</em></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cultural-card">
+                            <h4>💼 Standard Formal Register (ភាសាផ្លូវការ)</h4>
+                            <p>Business meetings, formal presentations, written reports</p>
+                            <div class="example-grid">
+                                <div class="example-card">
+                                    <h5>Business Vocabulary:</h5>
+                                    <div class="khmer-text">ការប្រជុំ - meeting</div>
+                                    <div class="khmer-text">របាយការណ៍ - report</div>
+                                    <div class="khmer-text">គម្រោង - project</div>
+                                    <div class="khmer-text">ចំណេះដឹង - knowledge</div>
+                                    <div class="khmer-text">បទពិសោធន៍ - experience</div>
+                                </div>
+                                <div class="example-card">
+                                    <h5>Usage Pattern:</h5>
+                                    <div class="khmer-text">សូមអរគុណចំពោះការចូលរួមក្នុងការប្រជុំនេះ។</div>
+                                    <p><em>Thank you for participating in this meeting.</em></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="honorifics" class="tab-content">
+                    <div class="subsection">
+                        <h3>Honorific System (ប្រព័ន្ធកិត្តិយស)</h3>
+
+                        <table class="vocabulary-table">
+                            <thead>
+                                <tr>
+                                    <th>Level</th>
+                                    <th>Pronoun</th>
+                                    <th>Usage Context</th>
+                                    <th>Example</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Highest</strong></td>
+                                    <td><span class="khmer-text">ព្រះអង្គ</span></td>
+                                    <td>Royal family, Buddha</td>
+                                    <td><span class="khmer-text">ព្រះអង្គទ្រង់មានព្រះហស្តដែលទន់</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Very High</strong></td>
+                                    <td><span class="khmer-text">លោកជំទាវ/លោក</span></td>
+                                    <td>High officials, VIPs</td>
+                                    <td><span class="khmer-text">លោកជំទាវនាយករដ្ឋមន្រ្តី</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>High</strong></td>
+                                    <td><span class="khmer-text">លោកគ្រូ/លោកគ្រូសូ</span></td>
+                                    <td>Teachers, professionals</td>
+                                    <td><span class="khmer-text">លោកគ្រូបង្រៀនយ៉ាងល្អ</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Respectful</strong></td>
+                                    <td><span class="khmer-text">បង/អូន</span></td>
+                                    <td>Peers, colleagues</td>
+                                    <td><span class="khmer-text">បងមានគំនិតល្អ</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Standard</strong></td>
+                                    <td><span class="khmer-text">អ្នក</span></td>
+                                    <td>General polite address</td>
+                                    <td><span class="khmer-text">អ្នកមកពីណា?</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="context-box">
+                            <h5>Cultural Context:</h5>
+                            <p>Choosing the wrong honorific level can be socially awkward or even offensive. When in
+                                doubt, err on the side of higher formality, especially with older people or those in
+                                positions of authority.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="titles" class="tab-content">
+                    <div class="subsection">
+                        <h3>Professional Titles & Forms of Address</h3>
+
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <h4>Academic Titles</h4>
+                                <div class="khmer-text">សាស្រ្តាចារ្យ - Professor</div>
+                                <div class="khmer-text">សាស្រ្តាចារ្យបន្ទាប់បន្សំ - Associate Professor</div>
+                                <div class="khmer-text">សាស្រ្តាចារ្យជំនួយការ - Assistant Professor</div>
+                                <div class="khmer-text">បណ្ឌិត - Doctor (PhD)</div>
+                                <div class="khmer-text">អ្នកស្រាវជ្រាវ - Researcher</div>
+                            </div>
+                            <div class="example-card">
+                                <h4>Government Titles</h4>
+                                <div class="khmer-text">សម្តេចអគ្គមហាសេនាបតីតេជោ - Prime Minister</div>
+                                <div class="khmer-text">ឯកឧត្តម - Excellence (Minister level)</div>
+                                <div class="khmer-text">លោកជំទាវរដ្ឋមន្រ្តី - Madam Minister</div>
+                                <div class="khmer-text">លោករដ្ឋមន្រ្តី - Mr. Minister</div>
+                                <div class="khmer-text">លោកអភិបាល - Governor</div>
+                            </div>
+                            <div class="example-card">
+                                <h4>Religious Titles</h4>
+                                <div class="khmer-text">សម្តេចព្រះសង្ឃរាជ - Supreme Patriarch</div>
+                                <div class="khmer-text">ព្រះតេជព្រះគុណ - Venerable (high monk)</div>
+                                <div class="khmer-text">ព្រះអាចារ្យ - Abbot</div>
+                                <div class="khmer-text">ព្រះសង្ឃ - Monk</div>
+                                <div class="khmer-text">សំណេរ - Novice monk</div>
+                            </div>
+                            <div class="example-card">
+                                <h4>Business Titles</h4>
+                                <div class="khmer-text">ប្រធានក្រុមហ៊ុន - Company President</div>
+                                <div class="khmer-text">នាយកប្រតិបត្តិ - Executive Director</div>
+                                <div class="khmer-text">ប្រធានផ្នែក - Department Head</div>
+                                <div class="khmer-text">អ្នកគ្រប់គ្រង - Manager</div>
+                                <div class="khmer-text">ទីប្រឹក្សា - Advisor</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="2">
+            <h2><span class="section-icon">2</span>Academic & Technical Terminology</h2>
+
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="showTab('academic')">Academic Fields</button>
+                    <button class="tab-button" onclick="showTab('research')">Research Terms</button>
+                    <button class="tab-button" onclick="showTab('technical')">Technical Vocabulary</button>
+                </div>
+
+                <div id="academic" class="tab-content active">
+                    <div class="subsection">
+                        <h3>Academic Disciplines (មុខវិជ្ជាសិក្សា)</h3>
+
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <h4>Humanities (មនុស្សសាស្រ្ត)</h4>
+                                <div class="khmer-text">ប្រវត្តិសាស្រ្ត - History</div>
+                                <div class="khmer-text">ភាសាសាស្រ្ត - Linguistics</div>
+                                <div class="khmer-text">វប្បធម៌សាស្រ្ត - Anthropology</div>
+                                <div class="khmer-text">ទេវតាសាស្រ្ត - Philosophy</div>
+                                <div class="khmer-text">អក្សរសាស្រ្ត - Literature</div>
+                                <div class="khmer-text">សិល្បៈកាល - Art History</div>
+                            </div>
+                            <div class="example-card">
+                                <h4>Social Sciences (សង្គមសាស្រ្ត)</h4>
+                                <div class="khmer-text">រដ្ឋសាស្រ្ត - Political Science</div>
+                                <div class="khmer-text">សេដ្ឋកិច្ចសាស្រ្ត - Economics</div>
+                                <div class="khmer-text">សង្គមវិទ្យា - Sociology</div>
+                                <div class="khmer-text">ចិត្តសាស្រ្ត - Psychology</div>
+                                <div class="khmer-text">ប្រជាសាស្រ្ត - Demographics</div>
+                                <div class="khmer-text">ការអប់រំសាស្រ្ត - Education</div>
+                            </div>
+                            <div class="example-card">
+                                <h4>Natural Sciences (វិទ្យាសាស្រ្តធម្មជាតិ)</h4>
+                                <div class="khmer-text">រូបវិទ្យា - Physics</div>
+                                <div class="khmer-text">គីមីវិទ្យា - Chemistry</div>
+                                <div class="khmer-text">ជីវវិទ្យា - Biology</div>
+                                <div class="khmer-text">ប្រកប់ដីវិទ្យា - Geology</div>
+                                <div class="khmer-text">តារាវិទ្យា - Astronomy</div>
+                                <div class="khmer-text">បរិស្ថានវិទ្យា - Environmental Science</div>
+                            </div>
+                            <div class="example-card">
+                                <h4>Applied Sciences (វិទ្យាសាស្រ្តអនុវត្ត)</h4>
+                                <div class="khmer-text">វិស្វកម្មសាស្រ្ត - Engineering</div>
+                                <div class="khmer-text">វេជ្ជសាស្រ្ត - Medicine</div>
+                                <div class="khmer-text">កសិកម្មសាស្រ្ត - Agriculture</div>
+                                <div class="khmer-text">ព័ត៌មានវិទ្យា - Information Technology</div>
+                                <div class="khmer-text">ស្ថាបត្យក
